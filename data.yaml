@@ -1,0 +1,6 @@
+train: E:\test_final_split_v2\train\images
+val: E:\test_final_split_v2\val\images
+test: E:\test_final_split_v2\test\images
+
+nc: 12
+names: ['traffic light', 'traffic sign', 'car', 'person', 'bus', 'truck', 'rider', 'bike', 'motor', 'train', 'banner', 'tuktuk']
