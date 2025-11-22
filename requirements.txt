@@ -1,0 +1,6 @@
+tqdm
+Pillow
+numpy
+ultralytics
+torch
+psutil
