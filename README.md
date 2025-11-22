@@ -111,6 +111,4 @@ The final model was deployed using **Gradio and Hugging Face Spaces** with API s
 3.  Improve production readiness with lightweight MLOps for monitoring and retraining.
 
 ---
-**Project Drive:** [Drive Link]
-**GitHub Repository:** [Repo Link]
-**Dataset:** BDD100K
+
