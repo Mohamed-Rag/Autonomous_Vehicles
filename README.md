@@ -73,8 +73,8 @@ The repository is structured to separate data handling, training, and inference 
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-name>
+    git clone <https://github.com/Mohamed-Rag/Autonomous_Vehicles>
+    cd <Autonomous_Vehicles>
     ```
 
 2.  **Install dependencies:**
