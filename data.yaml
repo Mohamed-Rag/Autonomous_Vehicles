@@ -1,6 +1,18 @@
-train: E:\test_final_split_v2\train\images
-val: E:\test_final_split_v2\val\images
-test: E:\test_final_split_v2\test\images
+train: H:/Startups/Autonomus Car Detection DEPI/train/train/images
+val: H:/Startups/Autonomus Car Detection DEPI/val/val/images
+test: H:/Startups/Autonomus Car Detection DEPI/test/test/images
 
 nc: 12
-names: ['traffic light', 'traffic sign', 'car', 'person', 'bus', 'truck', 'rider', 'bike', 'motor', 'train', 'banner', 'tuktuk']
+names:
+  - traffic light
+  - traffic sign
+  - car
+  - person
+  - bus
+  - truck
+  - rider
+  - bike
+  - motor
+  - train
+  - banner
+  - tuktuk

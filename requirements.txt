@@ -1,6 +1,22 @@
-tqdm
-Pillow
-numpy
-ultralytics
-torch
-psutil
+# Core ML/DL Libraries
+torch>=2.0.0
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# MLOps
+mlflow>=2.8.0
+
+# Web Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+jinja2>=3.1.2
+
+# System Monitoring
+psutil>=5.9.0
+
+# Utilities
+python-dotenv>=1.0.0
+
