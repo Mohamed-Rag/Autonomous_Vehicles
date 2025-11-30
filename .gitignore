@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Streamlit Secrets (IMPORTANT: Never commit secrets!)
+.streamlit/secrets.toml
+
+# Model files (optional - uncomment if you don't want to commit models)
+# *.pt
+# *.pth
+# *.onnx
+# *.h5
+
+# Logs
+*.log
+prediction_logs/
+monitoring_reports/
+
+# Render specific
+.render/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Dataset directories
+train/
+test/
+val/
+data/
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+archive.zip
+

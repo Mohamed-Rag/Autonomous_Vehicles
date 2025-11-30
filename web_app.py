@@ -28,13 +28,25 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configuration
-MODEL_PATH = r"H:\Startups\Autonomus Car Detection DEPI\best68.pt"
+# Configuration - Cloud-ready with environment variables
+MODEL_PATH = os.getenv("MODEL_PATH", "yolov11s_final.pt")
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
-PREDICTION_LOG_DIR = r"H:\Startups\Autonomus Car Detection DEPI\prediction_logs"
+DATABRICKS_TOKEN = os.getenv("DATABRICKS_TOKEN")
+PREDICTION_LOG_DIR = os.getenv("PREDICTION_LOG_DIR", "./prediction_logs")
 
 # Create directories if they don't exist
 os.makedirs(PREDICTION_LOG_DIR, exist_ok=True)
+
+# Setup Databricks authentication if token is provided
+if DATABRICKS_TOKEN:
+    os.environ['DATABRICKS_TOKEN'] = DATABRICKS_TOKEN
+    # Extract host from tracking URI for Databricks
+    if MLFLOW_TRACKING_URI and 'databricks' in MLFLOW_TRACKING_URI:
+        try:
+            host = MLFLOW_TRACKING_URI.replace('https://', '').split('/')[0]
+            os.environ['DATABRICKS_HOST'] = host
+        except:
+            pass
 
 # Load model
 print("Loading YOLO model...")
@@ -46,16 +58,20 @@ except Exception as e:
     model = None
 
 # Setup MLflow for prediction tracking
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-EXPERIMENT_NAME = "YOLOv11s_Autonomous_Driving_OD_Predictions"
-
-try:
-    experiment = mlflow.get_experiment_by_name(EXPERIMENT_NAME)
-    if experiment is None:
-        mlflow.create_experiment(EXPERIMENT_NAME)
-    mlflow.set_experiment(EXPERIMENT_NAME)
-except:
-    pass
+if MLFLOW_TRACKING_URI:
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    EXPERIMENT_NAME = "YOLOv11s_Autonomous_Driving_OD_Predictions"
+    
+    try:
+        experiment = mlflow.get_experiment_by_name(EXPERIMENT_NAME)
+        if experiment is None:
+            mlflow.create_experiment(EXPERIMENT_NAME)
+        mlflow.set_experiment(EXPERIMENT_NAME)
+        print(f"✅ MLflow connected to {MLFLOW_TRACKING_URI}")
+    except Exception as e:
+        print(f"⚠️ Warning: MLflow setup issue: {e}")
+else:
+    print("⚠️ Warning: MLFLOW_TRACKING_URI not set, MLflow logging disabled")
 
 # Templates (if you want to add HTML frontend)
 templates_dir = Path(__file__).parent / "templates"
@@ -83,6 +99,8 @@ def log_prediction_to_mlflow(image_info: Dict, predictions: List[Dict], inferenc
                 mlflow.log_metric(f"detections_{cls}", count)
             
             mlflow.set_tag("prediction_type", "real_time")
+            mlflow.set_tag("platform", "render_cloud")
+            mlflow.set_tag("model_version", "yolov11s_final")
     except Exception as e:
         print(f"⚠️ Warning: Could not log to MLflow: {e}")
 

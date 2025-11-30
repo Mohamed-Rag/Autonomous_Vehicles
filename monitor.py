@@ -15,10 +15,21 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-# Configuration
+# Configuration - Cloud-ready with environment variables
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
+DATABRICKS_TOKEN = os.getenv("DATABRICKS_TOKEN")
 EXPERIMENT_NAME = "YOLOv11s_Autonomous_Driving_OD_Predictions"
-PREDICTION_LOG_DIR = r"H:\Startups\Autonomus Car Detection DEPI\prediction_logs"
+PREDICTION_LOG_DIR = os.getenv("PREDICTION_LOG_DIR", "./prediction_logs")
+
+# Setup Databricks authentication if token is provided
+if DATABRICKS_TOKEN:
+    os.environ['DATABRICKS_TOKEN'] = DATABRICKS_TOKEN
+    if MLFLOW_TRACKING_URI and 'databricks' in MLFLOW_TRACKING_URI:
+        try:
+            host = MLFLOW_TRACKING_URI.replace('https://', '').split('/')[0]
+            os.environ['DATABRICKS_HOST'] = host
+        except:
+            pass
 ALERT_THRESHOLDS = {
     "accuracy_drop": 0.10,  # 10% drop in accuracy
     "inference_time_ms": 1000,  # 1 second
